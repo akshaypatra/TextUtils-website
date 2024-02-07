@@ -4,7 +4,7 @@ import React,{useState} from 'react'
 
 export default function TextForm(props) {
 
-
+    
     const handleUpClick=()=>{
         // console.log("Uppercase was clicked"+text);
         let newText=text.toUpperCase();
@@ -44,6 +44,7 @@ export default function TextForm(props) {
         text.select();
         // text.setSelectionRange(0,9999);
         navigator.clipboard.writeText(text.value);
+        document.getSelection().removeAllRanges();
         props.showAlert("Copied to Clipboard","success");
     }
 
@@ -70,12 +71,12 @@ export default function TextForm(props) {
                 {/* <label for="myBox" className='form-label'>Example Teaxtarea</label> */}
                 <textarea className='form-control' style={{backgroundColor: props.mode==='dark'?'grey':'white',color: props.mode==='dark'?'white':'black'}} value={text} id='myBox' rows="8" onChange={handleOnChange}></textarea>
             </div>
-            <button className='btn btn-primary mx-2 my-1' onClick={handleUpClick}>Convert to Uppercase </button>
-            <button className='btn btn-primary mx-2 my-1' onClick={handleLowClick}>Convert to Lowercase </button>
-            <button className='btn btn-primary mx-2 my-1' onClick={handleCapitalizeClick}>Capitalize text</button>
-            <button className='btn btn-primary mx-2 my-1' onClick={handleSpaces}>Remove Extra Spaces</button>
-            <button className='btn btn-primary mx-2 my-1' onClick={handleCopy}>Select All</button>
-            <button className='btn btn-primary mx-2 my-1' onClick={handleClearClick}>Clear</button>
+            <button disabled={text.length===0} className='btn btn-primary mx-2 my-1' onClick={handleUpClick}>Convert to Uppercase </button>
+            <button disabled={text.length===0} className='btn btn-primary mx-2 my-1' onClick={handleLowClick}>Convert to Lowercase </button>
+            <button disabled={text.length===0} className='btn btn-primary mx-2 my-1' onClick={handleCapitalizeClick}>Capitalize text</button>
+            <button disabled={text.length===0} className='btn btn-primary mx-2 my-1' onClick={handleSpaces}>Remove Extra Spaces</button>
+            <button disabled={text.length===0} className='btn btn-primary mx-2 my-1' onClick={handleCopy}>Select All</button>
+            <button disabled={text.length===0} className='btn btn-primary mx-2 my-1' onClick={handleClearClick}>Clear</button>
         </div>
         <hr/>
         <div className='container my-4'  style={{color: props.mode==='dark'?'white':'black'}}>
@@ -84,7 +85,7 @@ export default function TextForm(props) {
             <p>{0.008*text.split(" ").filter((element)=>{return element.length!==0}).length} Minutes to read</p>
             <hr/>
             <h2>Preview</h2>
-            <p>{text.length>0?text:'Enter Something in the text Box above to preview it here' }</p>
+            <p>{text.length>0?text:'Nothing to preview' }</p>
 
         </div>
     </>
